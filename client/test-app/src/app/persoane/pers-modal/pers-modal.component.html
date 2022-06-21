@@ -1,0 +1,37 @@
+<div class="modal-container">
+    <div class="top-row">
+        <h2>Adauga o persoana</h2>
+        <button class="btn" (click)="closeDialog()">
+            <fa-icon [icon]="faXmark"></fa-icon>
+        </button>
+    </div>
+    <form [formGroup]="personForm" (ngSubmit)="onPersonAdd(personForm.value)">
+        <div class="form-group">
+            <p>Nume</p>
+            <input type="text" name="nume" formControlName="nume" class="form-control" [ngClass]="{'is-invalid': submitted && personForm.controls.nume.errors}">
+        </div>
+        <div *ngIf="submitted && personForm.controls.nume.errors" class="text-danger"></div>
+        <div *ngIf="personForm.controls.nume.errors?.required && personForm.controls.nume.touched">Numele este un camp obligatoriu</div>
+        <div class="form-group">
+            <p>Prenume</p>
+            <input type="text" name="prenume" formControlName="prenume" class="form-control" [ngClass]="{'is-invalid': submitted && personForm.controls.prenume.errors}">
+        </div>
+        <div *ngIf="submitted && personForm.controls.prenume.errors" class="text-danger"></div>
+        <div *ngIf="personForm.controls.prenume.errors?.required && personForm.controls.prenume.touched">Numele este un camp obligatoriu</div>
+        <div class="form-group">
+            <p>CNP</p>
+            <input type="text" name="cnp" formControlName="cnp" class="form-control" [ngClass]="{'is-invalid': submitted && personForm.controls.cnp.errors}">
+        </div>
+        <div *ngIf="submitted && personForm.controls.cnp.errors" class="text-danger"></div>
+        <div *ngIf="personForm.controls.cnp.errors?.required && personForm.controls.cnp.touched">Numele este un camp obligatoriu</div>
+        <div class="form-group">
+            <p>Masini detinute</p>
+            <input type="text" name="masina" formControlName="masina" class="form-control" [ngClass]="{'is-invalid': submitted && personForm.controls.masina.errors}">
+        </div>
+        <div *ngIf="submitted && personForm.controls.masina.errors" class="text-danger"></div>
+        <div *ngIf="personForm.controls.masina.errors?.required && personForm.controls.masina.touched">Numele este un camp obligatoriu</div>
+        <br>
+        <input type="submit" value="Adauga persoana">
+        <p>{{okMsg}}</p>
+    </form>
+</div>

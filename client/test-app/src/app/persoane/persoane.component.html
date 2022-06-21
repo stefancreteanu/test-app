@@ -1,0 +1,39 @@
+<div class="container">
+    <table id="customers">
+        <tr>
+            <th>ID</th>
+            <th>Nume / Prenume</th>
+            <th>CNP</th>
+            <th>Varsta</th>
+            <th>Masini detinute</th>
+            <th class="plus">
+                <button class="plus btn" (click)="openDialog()">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                </button>
+            </th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <ng-multiselect-dropdown
+            [placeholder]="'Selecteaza o masina'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            (onSelect)="onItemSelect($event)"
+            >
+            </ng-multiselect-dropdown>
+            <td class="trash">
+                <button class="trash btn">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+            </td>
+            <td class="edit">
+                <button class="edit btn">
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+            </td>
+        </tr>      
+    </table>
+</div>

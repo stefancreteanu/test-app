@@ -1,0 +1,35 @@
+<div class="container">
+    <table id="customers">
+        <tr>
+            <th>ID</th>
+            <th>Marca</th>
+            <th>Model</th>
+            <th>An fabricatie</th>
+            <th>Capacitate cilindrica</th>
+            <th>Taxa impozit</th>
+            <th class="plus">
+                <button class="plus btn" (click)="openDialog()">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                </button>
+            </th>
+        </tr>
+        <tr *ngFor="let masina of masini">
+            <td>{{masina.id}}</td>
+            <td>{{masina.marca}}</td>
+            <td>{{masina.model}}</td>
+            <td>{{masina.anfab}}</td>
+            <td>{{masina.capcil}}</td>
+            <td>{{masina.taxa}}</td>
+            <td class="trash">
+                <button class="trash btn" (click)="deleteCar(masina.id)">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+            </td>
+            <td class="edit">
+                <button class="edit btn" id="edit" (click)="openDialog()">
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

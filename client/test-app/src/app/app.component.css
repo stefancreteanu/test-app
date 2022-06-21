@@ -1,0 +1,11 @@
+.nav-bar {
+    background-color: rgb(66, 101, 255);
+    padding: 10px;
+}
+
+.nav-bar a {
+    padding: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
