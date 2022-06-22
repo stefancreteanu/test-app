@@ -12,6 +12,11 @@
                     <fa-icon [icon]="faPlus"></fa-icon>
                 </button>
             </th>
+            <th class="edit">
+                <button class="edit btn" id="edit" (click)="editDialog()">
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+            </th>
         </tr>
         <tr *ngFor="let masina of masini">
             <td>{{masina.id}}</td>
@@ -23,11 +28,6 @@
             <td class="trash">
                 <button class="trash btn" (click)="deleteCar(masina.id)">
                     <fa-icon [icon]="faTrash"></fa-icon>
-                </button>
-            </td>
-            <td class="edit">
-                <button class="edit btn" id="edit" (click)="openDialog()">
-                    <fa-icon [icon]="faEdit"></fa-icon>
                 </button>
             </td>
         </tr>

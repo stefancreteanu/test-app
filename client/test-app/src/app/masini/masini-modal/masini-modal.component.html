@@ -1,6 +1,6 @@
 <div class="modal-container">
     <div class="top-row">
-        <h2>Adauga o masina</h2>
+        <h2>Adauga / Modifica o masina</h2>
         <button class="btn" (click)="closeDialog()">
             <fa-icon [icon]="faXmark"></fa-icon>
         </button>
@@ -31,7 +31,7 @@
         <div *ngIf="submitted && carForm.controls.model.errors" class="text-danger"></div>
         <div *ngIf="carForm.controls.model.errors?.required && carForm.controls.model.touched">Capacitatea cilindrica este un camp obligatoriu</div>
         <br>
-        <input type="submit" value="Adauga masina"/>
+        <input type="submit" value="Submit"/>
         <p>{{okMsg}}</p>
     </form>
 </div>

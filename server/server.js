@@ -114,6 +114,8 @@ app.post('/persoane', async (req, res) => {
     }
 })
 
+
+//POST CAR REQUEST
 app.post('/masina', async (req, res) => {
     const masina = req.body;
     console.log(masina);
@@ -134,6 +136,8 @@ app.post('/masina', async (req, res) => {
     }
 })
 
+
+//GET ALL CARS REQUEST
 app.get('/masina', async (req, res) => {
     try {
         const masina = await Masina.findAll();
@@ -143,15 +147,31 @@ app.get('/masina', async (req, res) => {
     }
 })
 
-app.post('/delcar', async (req, res) => {
-    const carId = req.body
-    console.log(carId.id);
+//DELETE CAR REQUEST
+app.delete('/delcar/:id', async (req, res) => {
+    const carId = req.params.id;
+    console.log(carId);
     try {
         Masina.destroy({
             where: {
-                id: carId.id
+                id: carId
             }
         })
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+//EDIT CAR REQUEST
+app.get('/editmasina/:id', async (req, res) => {
+    console.log(req.params.id);
+    try {
+        const masina = await Masina.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        res.send(masina);
     } catch (error) {
         console.log(error);
     }

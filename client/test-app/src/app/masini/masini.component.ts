@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { parse } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MasiniModalComponent } from './masini-modal/masini-modal.component';
 
@@ -30,12 +29,15 @@ export class MasiniComponent implements OnInit {
     this.dialogRef.open(MasiniModalComponent);
   }
 
+  editDialog() {
+    this.dialogRef.open(MasiniModalComponent);
+  }
+
   deleteCar(carId) {
-    const parsedId = {
+    let parsedId = {
       id: carId
     }
-
-    this.http.post('http://localhost:8080/delcar', parsedId).subscribe();
+    this.http.delete(`http://localhost:8080/delcar/${parsedId.id}`).subscribe();
     window.location.reload();
   }
 

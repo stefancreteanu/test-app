@@ -27,7 +27,7 @@ const appRoutes: Routes = [
     PersoaneComponent,
     MasiniComponent,
     PersModalComponent,
-    MasiniModalComponent
+    MasiniModalComponent,
   ],
   imports: [
     BrowserModule,
