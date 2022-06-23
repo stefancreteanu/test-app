@@ -12,26 +12,20 @@
                 </button>
             </th>
         </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let persoana of persoane">
+            <td>{{persoana.id}}</td>
+            <td>{{persoana.nume + ' ' + persoana.prenume}}</td>
+            <td>{{persoana.cnp}}</td>
+            <td>{{persoana.varsta}}</td>
             <ng-multiselect-dropdown
             [placeholder]="'Selecteaza o masina'"
             [settings]="dropdownSettings"
             [data]="dropdownList"
-            (onSelect)="onItemSelect($event)"
             >
             </ng-multiselect-dropdown>
             <td class="trash">
                 <button class="trash btn">
                     <fa-icon [icon]="faTrash"></fa-icon>
-                </button>
-            </td>
-            <td class="edit">
-                <button class="edit btn">
-                    <fa-icon [icon]="faEdit"></fa-icon>
                 </button>
             </td>
         </tr>      

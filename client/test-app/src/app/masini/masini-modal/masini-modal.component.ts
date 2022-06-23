@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MasiniComponent } from '../masini.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-masini-modal',
@@ -14,37 +13,48 @@ export class MasiniModalComponent implements OnInit {
   carForm!:FormGroup;
   submitted = false;
 
-  constructor(private http:HttpClient,
-              private dialogRef: MatDialog, 
-              private fb: FormBuilder) { }
+  @Input() carId: number | undefined;
+
+  modal = {} as any;
+
+  constructor(private http: HttpClient,
+              private fb: FormBuilder,
+              private _modal: NgbActiveModal) { }
 
   closeDialog() {
-    this.dialogRef.closeAll();
+    this._modal.dismiss();
   }
 
   faXmark = faXmark;
   okMsg = '';
 
-  onCarAdd(car: {marca: string, model: string, anfab: string, capcil: string, taxa: string}) {
-      let capcil = Number(car.capcil)
-      let intTax = Number(car.taxa);
+  onCarAdd() {
+      let capcil = Number(this.modal.capcil)
+      let intTax = Number(this.modal.taxa);
       if(capcil <= 1500 && capcil > 0) {
         intTax = 50;
       } else if (capcil > 1500 && capcil <= 2000) {
         intTax = 100;
-      } else if (car.capcil === '' || capcil === NaN) {
+      } else if (this.modal.capcil === '' || capcil === NaN) {
         intTax = 0;
       } else {
         intTax = 200;
       }
-      car.taxa = intTax.toString();
-      this.http.post('http://localhost:8080/masina', car).subscribe(res => {
+      this.modal.taxa = intTax.toString();
+
+      if(!this.carId) {
+        this.http.post('http://localhost:8080/masina', this.modal).subscribe(res => {
         this.okMsg = res.toString();
-        if(this.okMsg !== '') {
-          this.dialogRef.closeAll();
-          window.location.reload();
-        }
-      });
+          if(this.okMsg !== '') {
+            this._modal.close()
+            window.location.reload();
+          }
+        });
+      } else {
+        this.http.put('http://localhost:8080/updatecar', this.modal).subscribe();
+        this._modal.close();
+        window.location.reload();
+      } 
   }
 
   ngOnInit() {
@@ -55,6 +65,12 @@ export class MasiniModalComponent implements OnInit {
       capcil: ['', Validators.required],
       taxa: ['', Validators.required]
     }, {updateOn: 'submit'})
+
+    if(this.carId) {
+      this.http.get(`http://localhost:8080/getcar/${this.carId}`).subscribe(data => {
+        this.modal = data;
+      })
+    }
   }
 
 }

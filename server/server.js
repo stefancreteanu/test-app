@@ -43,7 +43,7 @@ Persoana.init(
             allowNull: false
         },
         masina: {
-            type: DataTypes.JSON,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         customid: {
@@ -93,22 +93,27 @@ Masina.init(
 )
 
 app.post('/persoane', async (req, res) => {
-    let id = 0;
     const person = req.body;
+    console.log(person);
     try {
-        if(person.nume !== '' && person.prenume !== '' && person.cnp !== '' && person.masina !== '') {
-            id += 1;
-            await sequelize.sync();
-            Persoana.create({
-                nume: person.nume,
-                prenume: person.prenume,
-                cnp: person.cnp,
-                varsta: person.varsta,
-                masina: person.masina,
-                customid: id
-            })
-            res.json('Persoana a fost adaugata');
-        }
+        await sequelize.sync();
+        Persoana.create({
+            nume: person.nume,
+            prenume: person.prenume,
+            cnp: person.cnp,
+            varsta: person.varsta,
+            masina: person.masina,
+        })
+        res.json('Persoana a fost adaugata');
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+app.get('/persoane', async (req, res) => {
+    try {
+        const persoana = await Persoana.findAll();
+        res.send(persoana);
     } catch (error) {
         console.log(error);
     }
@@ -150,9 +155,8 @@ app.get('/masina', async (req, res) => {
 //DELETE CAR REQUEST
 app.delete('/delcar/:id', async (req, res) => {
     const carId = req.params.id;
-    console.log(carId);
     try {
-        Masina.destroy({
+        await Masina.destroy({
             where: {
                 id: carId
             }
@@ -162,9 +166,8 @@ app.delete('/delcar/:id', async (req, res) => {
     }
 })
 
-//EDIT CAR REQUEST
-app.get('/editmasina/:id', async (req, res) => {
-    console.log(req.params.id);
+//GET 1 CAR REQUEST
+app.get('/getcar/:id', async (req, res) => {
     try {
         const masina = await Masina.findOne({
             where: {
@@ -174,6 +177,20 @@ app.get('/editmasina/:id', async (req, res) => {
         res.send(masina);
     } catch (error) {
         console.log(error);
+    }
+})
+
+//UPDATE CAR REQUEST
+
+app.put('/updatecar', async (req, res) => {
+    try {
+        await Masina.update(req.body, {
+            where: {
+                id: req.body.id
+            }
+        })
+    } catch (error) {
+        console.log(err);
     }
 })
 

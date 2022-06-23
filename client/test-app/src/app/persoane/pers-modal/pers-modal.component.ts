@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { concat } from 'rxjs';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-pers-modal',
@@ -14,17 +14,19 @@ export class PersModalComponent implements OnInit {
   personForm!:FormGroup;
   submitted = false;
 
-  constructor(private http:HttpClient, private dialogRef: MatDialog, private fb: FormBuilder) { }
+  constructor(private http:HttpClient, private dialogRef: NgbActiveModal, private fb: FormBuilder) { }
 
   closeDialog() {
-    this.dialogRef.closeAll();
+    this.dialogRef.dismiss();
   }
 
   faXmark = faXmark;
   okMsg = '';
 
-  onPersonAdd(person: {nume: string, prenume: string, cnp: string, varsta: string, masina: string}) {
-    const arrCNP = person.cnp;
+  person = {} as any;
+
+  onPersonAdd() {
+    const arrCNP = this.person.cnp;
     const dateObj = new Date();
 
     //Split personal number 
@@ -50,9 +52,10 @@ export class PersModalComponent implements OnInit {
     if(month < intBirthMonth) {
       intAge--
     }
-    person.varsta = intAge.toString();
-    this.http.post('http://localhost:8080/persoane', person).subscribe(res => {
+    this.person.varsta = intAge.toString();
+    this.http.post('http://localhost:8080/persoane', this.person).subscribe(res => {
       this.okMsg = res.toString();
+      this.dialogRef.close();
     });
   }
 
@@ -63,6 +66,6 @@ export class PersModalComponent implements OnInit {
       cnp: ['', Validators.required],
       masina: ['', Validators.required],
     }, {updateOn: 'submit'})
+    
   }
-
 }

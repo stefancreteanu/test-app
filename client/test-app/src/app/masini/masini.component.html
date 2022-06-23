@@ -8,17 +8,12 @@
             <th>Capacitate cilindrica</th>
             <th>Taxa impozit</th>
             <th class="plus">
-                <button class="plus btn" (click)="openDialog()">
+                <button class="plus btn" (click)="editDialog()">
                     <fa-icon [icon]="faPlus"></fa-icon>
                 </button>
             </th>
-            <th class="edit">
-                <button class="edit btn" id="edit" (click)="editDialog()">
-                    <fa-icon [icon]="faEdit"></fa-icon>
-                </button>
-            </th>
         </tr>
-        <tr *ngFor="let masina of masini">
+        <tr *ngFor="let masina of masini" (dblclick)="editDialog(masina.id)">
             <td>{{masina.id}}</td>
             <td>{{masina.marca}}</td>
             <td>{{masina.model}}</td>
